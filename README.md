@@ -1,5 +1,4 @@
-# Neuroscience & Medical Device Portfolio 
-Add README
+# Neuroscience & Medical Device Portfolio
 
 Three small Python projects at the intersection of neuroscience, brain stimulation and medical device regulation. Built as a biomedical engineering student, learning as I go.
 
@@ -14,13 +13,15 @@ Classifies imagined left-hand vs right-hand movement from EEG, using the public 
 
 ![Accuracy per subject](subjects.png)
 
-## 2. EU MDR device classifier (`03_device_classifier.py`)
+## 2. EU MDR device classifier (`03_device_classifier.py`, `04_validate_mdcg.py`)
 
 A rule-based tool that assigns an EU MDR risk class (I, IIa, IIb, III) to a device described by yes/no facts. It checks every rule and takes the highest class, following Annex VIII of Regulation (EU) 2017/745.
 
 - Rules coded so far: 1, 8, 9, 10, 13 and 22, plus the 2022 reclassification of brain stimulators with no medical purpose
 - Example: the same TMS device is class IIb for treatment but class III for research-only use
-- Limitations: simplified, with many rule triggers not coded yet. The yes/no facts for each device are judgement calls. **Not yet validated against real products. Not regulatory advice.**
+- Checked against 29 worked examples from the official EU guidance (MDCG 2021-24 Rev.1, April 2026). On the first run 25 matched. That exposed one bug (devices that control active implants) and missing Rule 8 triggers (joint replacements, breast implants and meshes, spinal and dental implants). After fixing them, all 29 match.
+- Caveat: I fixed the rules while looking at these same examples, so this shows agreement with the guidance, not accuracy on unseen devices. The yes/no facts for each device are my reading of its intended use. Many rule triggers are still not coded. **Not regulatory advice.**
+- Reproduce with `python3 04_validate_mdcg.py`
 
 ## 3. Planned: TMS vs tDCS meta-analysis dashboard
 
@@ -34,4 +35,5 @@ source .venv/bin/activate
 pip install -r requirements.txt
 python3 02_multi_subject.py     # downloads EEG data on first run, takes several minutes
 python3 03_device_classifier.py
+python3 04_validate_mdcg.py
 ```

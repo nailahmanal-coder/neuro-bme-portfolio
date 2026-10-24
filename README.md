@@ -9,7 +9,9 @@ Classifies imagined left-hand vs right-hand movement from EEG, using the public 
 - Pipeline: band-pass filter (7-30 Hz), epoching, CSP features, LDA classifier, cross-validation (MNE-Python + scikit-learn)
 - Run on 10 subjects: mean accuracy **0.530** (chance is about 0.50)
 - One subject (7) reached 0.956. Most of the others were close to chance.
-- Limitations: only about 45 trials per subject, so each test split holds about 9 trials and accuracy is very noisy. This simple pipeline works for a few people, not most.
+ - Checked against 29 worked examples from the official EU guidance (MDCG 2021-24 Rev.1, April 2026). On the first run 25 matched. That exposed one bug (devices that control active implants) and missing Rule 8 triggers (joint replacements, breast implants and meshes, spinal and dental implants). After fixing them, all 29 match.
+- Caveat: I fixed the rules while looking at these same examples, so this shows agreement with the guidance, not accuracy on unseen devices. The yes/no facts for each device are my reading of its intended use. Many rule triggers are still not coded. **Not regulatory advice.**
+- Reproduce with `python3 04_validate_mdcg.py`
 
 ![Accuracy per subject](subjects.png)
 

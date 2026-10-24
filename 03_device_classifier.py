@@ -20,8 +20,13 @@ def make(**facts):
         vital_danger=False,              # monitors vital signs where a change is immediately dangerous
         direct_diagnosis=False,          # gives a diagnosis or monitors vital processes
         energy_absorbed=False,           # diagnostic device that supplies energy absorbed by the body
-        brain_stimulation=False,         # electric/magnetic fields through the skull to change brain activity
+        brain_stimulation=False,
+                         joint_replacement=False,         # total or partial joint replacement
+        breast_implant_or_mesh=False,    # breast implant or surgical mesh
+        spinal_implant=False,            # spinal disc replacement / touches the spinal column
+        placed_in_teeth=False,           # dental devices placed in the teeth         # electric/magnetic fields through the skull to change brain activity
     )
+              # dental devices placed in the teeth
     device.update(facts)
     return device
 
@@ -32,16 +37,20 @@ def rule_1(d):
 
 
 def rule_8(d):
-    if d["implantable"]:
-        if d["active"] or d["contact_heart_or_cns"]:
-            return "III"    # active implantables, or touching heart / CNS
-        return "IIb"        # other implants (many extra triggers exist, not coded yet)
+    if not d["implantable"]:
+        return None
+    if (d["active"] or d["contact_heart_or_cns"] or d["joint_replacement"]
+            or d["breast_implant_or_mesh"] or d["spinal_implant"]):
+        return "III"        # active implants, heart/CNS, joints, breast, spine
+    if d["placed_in_teeth"]:
+        return "IIa"        # dental devices placed in the teeth
+    return "IIb"            # other implants (a few extra triggers still not coded)
 
 
 def rule_9(d):
+    if d["active"] and d["controls_active_implant"]:
+        return "III"        # controls or monitors an active implant
     if d["active"] and d["purpose"] == "therapeutic":
-        if d["controls_active_implant"]:
-            return "III"
         return "IIb" if d["hazardous_energy"] else "IIa"
 
 
@@ -101,6 +110,7 @@ devices = {
         invasive=True, implantable=True, active=True, purpose="therapeutic"),
 }
 
-for name, facts in devices.items():
-    cls, rules = classify(facts)
-    print(f"{name:<38} Class {cls:<4} ({', '.join(rules)})")
+if __name__ == "__main__":
+    for name, facts in devices.items():
+        cls, rules = classify(facts)
+        print(f"{name:<38} Class {cls:<4} ({', '.join(rules)})")

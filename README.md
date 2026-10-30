@@ -25,15 +25,15 @@ A rule-based tool that assigns an EU MDR risk class (I, IIa, IIb, III) to a devi
 
 ## 3. Planned: TMS vs tDCS meta-analysis dashboard
 
-An interactive tool to compare published results on TMS and tDCS for depression, including how much the evidence varies between studies. Not started yet.
+## 3. TMS vs tDCS meta-analysis (in progress)
 
-## Run it
+A random-effects meta-analysis written from scratch in Python (files `05` to `09`), applied to published trials of tDCS and rTMS for depression. An interactive dashboard on top of it is the next step.
 
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python3 02_multi_subject.py     # downloads EEG data on first run, takes several minutes
-python3 03_device_classifier.py
-python3 04_validate_mdcg.py
-```
+- Data: 4 home-based tDCS trials and 6 rTMS add-on trials for treatment-resistant depression, copied from the forest plots of two published meta-analyses (`studies_*.csv`). These are secondary data, not re-extracted from the original trials.
+- Validation: the code reproduces both published pooled results (tDCS -2.74 MADRS points [-4.19, -1.29]; rTMS SMD 0.86 [0.57, 1.15]). The rTMS paper's discussion section quotes a different number (0.97) from its own figure, and the code agrees with the figure.
+- Finding: on a common standardized scale, tDCS g = 0.38 and rTMS g = 0.86. The tDCS 95% prediction interval (-0.37 to 1.13) crosses zero, so a new trial could show no benefit. The rTMS interval does not, but it rests on 6 small, older trials where the estimated variation between trials is exactly zero, so it should be read as a minimum.
+- Limitations: very few trials; different scales, populations and eras, so the two treatments are not directly comparable; the DerSimonian-Laird method is unreliable with so few studies.
+
+![Forest plot](forest_plot.png)
+
+Reproduce with `python3 05_meta_analysis.py`, then `06_tms_check.py`, `07_compare.py`, `08_prediction_interval.py` and `09_forest_plot.py`.

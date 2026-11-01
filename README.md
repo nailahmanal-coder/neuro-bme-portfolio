@@ -27,6 +27,8 @@ A rule-based tool that assigns an EU MDR risk class (I, IIa, IIb, III) to a devi
 
 ## 3. TMS vs tDCS meta-analysis and dashboard
 
+**Live dashboard:** https://neuro-bme-portfolio-gethpulyyavrftxwme9x6j.streamlit.app/
+
 A random-effects meta-analysis written from scratch in Python (files `05` to `09`), applied to published trials of tDCS and rTMS for depression. An interactive dashboard on top of it is the next step.
 
 - Data: 4 home-based tDCS trials and 6 rTMS add-on trials for treatment-resistant depression, copied from the forest plots of two published meta-analyses (`studies_*.csv`). These are secondary data, not re-extracted from the original trials.

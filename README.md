@@ -25,7 +25,7 @@ A rule-based tool that assigns an EU MDR risk class (I, IIa, IIb, III) to a devi
 
 ## 3. Planned: TMS vs tDCS meta-analysis dashboard
 
-## 3. TMS vs tDCS meta-analysis (in progress)
+## 3. TMS vs tDCS meta-analysis and dashboard
 
 A random-effects meta-analysis written from scratch in Python (files `05` to `09`), applied to published trials of tDCS and rTMS for depression. An interactive dashboard on top of it is the next step.
 
@@ -36,4 +36,4 @@ A random-effects meta-analysis written from scratch in Python (files `05` to `09
 
 ![Forest plot](forest_plot.png)
 
-Reproduce with `python3 05_meta_analysis.py`, then `06_tms_check.py`, `07_compare.py`, `08_prediction_interval.py` and `09_forest_plot.py`.
+Reproduce with `python3 05_meta_analysis.py`, then `06_tms_check.py`, `07_compare.py`, `08_prediction_interval.py` and `09_forest_plot.py`. Run the dashboard with `streamlit run 10_dashboard.py` (needs `pip install -r requirements.txt`).
